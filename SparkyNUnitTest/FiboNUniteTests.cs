@@ -18,7 +18,7 @@ namespace Sparky
         }
 
         [Test]
-        public void GenerateFiboSeries_Range1_GetNotEmptyOrderedListWithOneMember0()
+        public void GenerateFiboSeries_Range1_GetListWithOneMember0()
         {
             _fibo.Range = 1;
             List<int> expectedFiboSeries = new() { 0 };
@@ -39,8 +39,10 @@ namespace Sparky
             List<int> result = _fibo.GetFiboSeries();
 
             Assert.That(result.Contains(3), Is.True);
-            Assert.That(result.Count, Is.EqualTo(6));
+            //Assert.That(result, Does.Contain(2));
             Assert.That(result.Contains(4), Is.False);
+            //Assert.That(result, Has.No.Member(4));
+            Assert.That(result.Count, Is.EqualTo(6));
             Assert.That(result, Is.EquivalentTo(expectedFiboSeries));
         }
     }
