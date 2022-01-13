@@ -15,7 +15,6 @@ namespace Sparky
             customer = new Customer();
         }
 
-
         [Test]
         public void CombineNames_InputFirstAndLastName_ReturnFullName()
         {
@@ -86,6 +85,22 @@ namespace Sparky
             Assert.Throws<ArgumentException>(() => customer.GreetAndCombineNames("", "Spark"));
             //option 2
             Assert.That(() => customer.GreetAndCombineNames("", "Spark"), Throws.ArgumentException);
+        }
+
+        [Test]
+        public void CustomerType_CreateCustomerWithLessThan100Orders_ReturnBasicCustomer()
+        {
+            customer.OrderTotal = 10;
+            var result = customer.GetCustomerDetails();
+            Assert.That(result, Is.TypeOf<BasicCustomer>());
+        }
+
+        [Test]
+        public void CustomerType_CreateCustomerWithMoreThan100Orders_ReturnPlatinumCustomer()
+        {
+            customer.OrderTotal = 110;
+            var result = customer.GetCustomerDetails();
+            Assert.That(result, Is.TypeOf<PlatinumCustomer>());
         }
     }
 }
