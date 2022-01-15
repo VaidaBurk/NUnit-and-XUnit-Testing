@@ -9,20 +9,49 @@ namespace Sparky
     public interface ILogBook
     {
         void Message(string message);
+
+        bool LogToDB(string message);
+
+        bool LogBalanceAfterWithdrawal(int balanceAfterWithdrawal);
+
+        string MessageWithReturnStr(string message);
     }
 
     public class LogBook : ILogBook
     {
+        public bool LogBalanceAfterWithdrawal(int balanceAfterWithdrawal)
+        {
+            if(balanceAfterWithdrawal >= 0)
+            {
+                Console.WriteLine("Success");
+                return true;
+            }
+            Console.WriteLine("Failure");
+            return false;
+        }
+
+        public bool LogToDB(string message)
+        {
+            Console.WriteLine(message);
+            return true;
+        }
+
         public void Message(string message)
         {
             Console.WriteLine(message);
         }
-    }
 
-    public class LogFakker : ILogBook
-    {
-        public void Message(string message)
+        public string MessageWithReturnStr(string message)
         {
+            Console.WriteLine(message);
+            return message.ToLower();
         }
     }
+
+    //public class LogFakker : ILogBook
+    //{
+    //    public void Message(string message)
+    //    {
+    //    }
+    //}
 }
