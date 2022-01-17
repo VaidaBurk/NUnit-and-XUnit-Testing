@@ -1,33 +1,16 @@
 ﻿using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Sparky
 {
-    [TestFixture]
-    public class BankAccountNUnitTests
+    public class BankAccountXUnitTests
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
-
-        //[Test]
-        //public void BankDepositLogFakker_Add100_ReturnTrue()
-        //{
-        //    BankAccount bankAccount = new(new LogFakker());
-        //    var result = bankAccount.Deposit(100);
-
-        //    Assert.IsTrue(result);
-        //    Assert.That(bankAccount.GetBalance, Is.EqualTo(100));
-        //}
-
-        [Test]
+        [Fact]
         public void BankDeposit_Add100_ReturnTrue()
         {
             var logMock = new Mock<ILogBook>();
@@ -35,11 +18,11 @@ namespace Sparky
             BankAccount bankAccount = new(logMock.Object);
             var result = bankAccount.Deposit(100);
 
-            Assert.IsTrue(result);
-            Assert.That(bankAccount.GetBalance, Is.EqualTo(100));
+            Assert.True(result);
+            Assert.Equal(100, bankAccount.GetBalance());
         }
 
-        [Test]
+        [Fact]
         public void BankWithdraw_Withdraw100WithBalance200_ReturnTrue()
         {
             var logMock = new Mock<ILogBook>();
@@ -50,10 +33,10 @@ namespace Sparky
 
             var result = bankAccount.Withdraw(100);
 
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        [Test]
+        [Fact]
         public void BankWithdraw_Withdraw300WithBalance200_ReturnFalse()
         {
             var logMock = new Mock<ILogBook>();
@@ -68,10 +51,10 @@ namespace Sparky
 
             var result = bankAccount.Withdraw(300);
 
-            Assert.IsFalse(result);
+            Assert.False(result);
         }
 
-        [Test]
+        [Fact]
         public void BankLogDymmy_LogMockString_ReturnTrue()
         {
             var logMock = new Mock<ILogBook>();
@@ -79,7 +62,7 @@ namespace Sparky
 
             logMock.Setup(u => u.MessageWithReturnStr(It.IsAny<string>())).Returns((string str) => str.ToLower());
 
-            Assert.That(logMock.Object.MessageWithReturnStr("Hello"), Is.EqualTo(desiredOutput));
+            Assert.Equal(desiredOutput, logMock.Object.MessageWithReturnStr("Hello"));
         }
 
     }
